@@ -1,2 +1,3 @@
 export * from './HapticFileHandler';
-export * from './FeelmeHandler';
+export * from './Commands'
+export { LoadFile, LoadString } from './Utils'

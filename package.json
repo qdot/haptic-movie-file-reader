@@ -8,7 +8,7 @@
     "build": "trash dist dist-bundle && yarn build:main",
     "build:main": "tsc -p tsconfig.json",
     "pretest": "yarn build:main",
-    "test": "nyc mocha tests/**/*.ts",
+    "test": "nyc mocha tests/*.ts",
     "posttest": "nyc report && codecov -f coverage/*.json"
   },
   "repository": {
