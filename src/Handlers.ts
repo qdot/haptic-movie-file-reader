@@ -2,7 +2,7 @@
 "use strict";
 
 import * as ini from "multi-ini";
-import { HapticCommand, KiirooCommand, VorzeCommand } from "./Commands";
+import { FunscriptCommand, HapticCommand, KiirooCommand, VorzeCommand } from "./Commands";
 import { HapticFileHandler } from "./HapticFileHandler";
 
 function ParseKiirooCommands(aCommands: string): HapticCommand[] {
@@ -30,15 +30,13 @@ function ParseKiirooCommands(aCommands: string): HapticCommand[] {
 
 export class FunscriptHandler extends HapticFileHandler  {
   public LoadString = (aBody: string) => {
-    throw new Error("not implemented");
+    this._commands = JSON.parse(aBody).actions.map((x) => new FunscriptCommand(x.at, x.pos));
   }
 }
 
 export class FeelmeHandler extends HapticFileHandler  {
   public LoadString = (aBody: string) => {
-    const feelmeBody = JSON.parse(aBody);
-    const commands = feelmeBody.text;
-    this._commands = ParseKiirooCommands(commands);
+    this._commands = ParseKiirooCommands(JSON.parse(aBody).text);
   }
 }
 
