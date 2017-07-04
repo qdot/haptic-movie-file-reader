@@ -1,9 +1,9 @@
-import { HapticCommand } from './Commands';
+import { HapticCommand } from "./Commands";
 
 export abstract class HapticFileHandler {
-  protected _commands : Array<HapticCommand> = [];
-  private _lastIndexRetrieved : number = 0;
-  private _lastTimeRetrieved : number = 0;
+  protected _commands: HapticCommand[] = [];
+  private _lastIndexRetrieved: number = 0;
+  private _lastTimeRetrieved: number = 0;
 
   HapticFileHandler() {
   }
@@ -13,12 +13,12 @@ export abstract class HapticFileHandler {
   }
 
   // TODO Lots of optimization choices here.
-  GetValueNearestTime(aTime: number) : HapticCommand | undefined {
+  GetValueNearestTime(aTime: number): HapticCommand | undefined {
     // We figure we'll normally be handing out indexes sequentially, while a
     // movie is playing. So always start from our last record returned.
     let startIndex = this._lastIndexRetrieved;
     if (aTime < this._lastTimeRetrieved) {
-      startIndex = 0
+      startIndex = 0;
     }
     let i = startIndex;
     for (; i < this._commands.length; ++i)
@@ -40,5 +40,5 @@ export abstract class HapticFileHandler {
   LoadFile() {
   }
 
-  abstract LoadString : (aBody: string)=>void;
+  abstract LoadString: (aBody: string) => void;
 }

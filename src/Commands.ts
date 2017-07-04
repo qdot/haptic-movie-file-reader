@@ -1,3 +1,5 @@
+"use strict";
+
 export class HapticCommand {
   constructor(private _time: number) {
   }
