@@ -14,7 +14,7 @@ interface FileReaderEvent extends Event {
 export function LoadFile(aFile: any) : Promise<HapticFileHandler> {
   let fr = new FileReader();
   let res, rej;
-  let p = new Promise((aResolve, aReject) => {
+  let p = new Promise<HapticFileHandler>((aResolve, aReject) => {
     res = aResolve;
     rej = aReject;
   });
