@@ -2,7 +2,7 @@
 "use strict";
 
 import * as ini from "ini";
-import { HapticCommand, KiirooCommand } from "./Commands";
+import { HapticCommand, KiirooCommand, VorzeCommand } from "./Commands";
 import { HapticFileHandler } from "./HapticFileHandler";
 
 function ParseKiirooCommands(aCommands: string): HapticCommand[] {
@@ -64,6 +64,21 @@ export class VirtualRealPornHandler extends HapticFileHandler  {
 
 export class VorzeHandler extends HapticFileHandler {
   public LoadString = (aBody: string) => {
-    throw new Error("not implemented");
+    const parseBody: string[] = aBody
+      .replace(/\r?\n|\r/g, "")
+      .split(",");
+    if (parseBody.length % 3 !== 0) {
+      parseBody.splice(-(parseBody.length % 3));
+    }
+    const commandsBody = parseBody.map((n) => {
+      const val = parseInt(n, 10);
+      if (val !== val) {
+        throw new Error("Wrong format");
+      }
+      return val;
+    });
+    for (let i = 0; i < commandsBody.length; i += 3) {
+      this._commands.push(new VorzeCommand(commandsBody[i] * 1000, commandsBody[i + 1], commandsBody[i + 2]));
+    }
   }
 }
