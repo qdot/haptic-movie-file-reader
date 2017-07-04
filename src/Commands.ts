@@ -48,15 +48,10 @@ export class LovenseMaxCommand extends HapticCommand {
   }
 }
 
-export class LaunchCommand extends HapticCommand {
+export class FunscriptCommand extends HapticCommand {
   constructor(time: number,
-              private _speed: number,
               private _position: number) {
     super(time);
-  }
-
-  public get Speed() {
-    return this._speed;
   }
 
   public get Position() {

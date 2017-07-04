@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
 import * as Reader from "../src/";
-import { KiirooCommand, VorzeCommand } from "../src/Commands";
+import { FunscriptCommand, KiirooCommand, VorzeCommand } from "../src/Commands";
 import { HapticFileHandler } from "../src/HapticFileHandler";
 
 // tslint:disable-next-line:max-line-length
@@ -32,6 +32,16 @@ const vorzeTest = `139,1,90,
 145,1,90,
 `;
 
+const funscriptTest = `{"range": 100,
+ "actions": [
+   {"pos": 0, "at": 677777},
+   {"pos": 10, "at": 679112},
+   {"pos": 0, "at": 679579},
+   {"pos": 0, "at": 681081},
+   {"pos": 10, "at": 682916}
+ ]
+}`;
+
 const kiirooMessageArray: KiirooCommand[] = [
   new KiirooCommand(201240, 3),
   new KiirooCommand(319370, 1),
@@ -46,6 +56,14 @@ const vorzeMessageArray: VorzeCommand[] = [
   new VorzeCommand(142000, 1, 90),
   new VorzeCommand(144000, 0, 90),
   new VorzeCommand(145000, 1, 90),
+];
+
+const funscriptMessageArray: FunscriptCommand[] = [
+  new FunscriptCommand(677777, 0),
+  new FunscriptCommand(679112, 10),
+  new FunscriptCommand(679579, 0),
+  new FunscriptCommand(681081, 0),
+  new FunscriptCommand(682916, 10),
 ];
 
 describe("Message", () => {
@@ -78,12 +96,24 @@ describe("Message", () => {
      () => {
        const p = Reader.LoadString(vorzeTest);
        if (p === undefined) {
-         throw new Error("cannot read file");
+         throw new Error("cannot read string");
        }
        const parser: HapticFileHandler = p;
        expect(parser.CommandLength).to.equal(5);
        expect(parser.Commands).to.deep.equal(vorzeMessageArray);
        expect(parser.GetValueNearestTime(141000)).to.deep.equal(new VorzeCommand(141000, 0, 90));
+     });
+
+  it("Loads and reads a Funscript file correctly",
+     () => {
+       const p = Reader.LoadString(funscriptTest);
+       if (p === undefined) {
+         throw new Error("cannot read string");
+       }
+       const parser: HapticFileHandler = p;
+       expect(parser.CommandLength).to.equal(5);
+       expect(parser.Commands).to.deep.equal(funscriptMessageArray);
+       expect(parser.GetValueNearestTime(679500)).to.deep.equal(new FunscriptCommand(679112, 10));
      });
 
   it("Returns undefined when a time is before the first entry",
