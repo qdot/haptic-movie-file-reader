@@ -44,7 +44,7 @@ export class KiirooHandler extends HapticFileHandler  {
     if (aBody.indexOf('var kiiroo_subtitles') != 0) {
       throw "Wrong format";
     }
-    let commands = aBody.substr(aBody.indexOf ('{'));
+    let commands = aBody.substr(aBody.indexOf('{')).split(';')[0];
     this._commands = ParseKiirooCommands(commands);
   }
 }
