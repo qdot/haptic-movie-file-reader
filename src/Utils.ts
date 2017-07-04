@@ -1,26 +1,27 @@
-import { HapticFileHandler } from './HapticFileHandler';
-import { HapticCommand } from './Commands';
-import * as Handlers from './Handlers';
+import { HapticCommand } from "./Commands";
+import * as Handlers from "./Handlers";
+import { HapticFileHandler } from "./HapticFileHandler";
 
-interface FileReaderEventTarget extends EventTarget {
-    result:string
+interface IFileReaderEventTarget extends EventTarget {
+    result: string;
 }
 
-interface FileReaderEvent extends Event {
-    target: FileReaderEventTarget;
-    getMessage():string;
+interface IFileReaderEvent extends Event {
+    target: IFileReaderEventTarget;
+    getMessage(): string;
 }
 
-export function LoadFile(aFile: any) : Promise<HapticFileHandler> {
-  let fr = new FileReader();
-  let res, rej;
-  let p = new Promise<HapticFileHandler>((aResolve, aReject) => {
+export function LoadFile(aFile: any): Promise<HapticFileHandler> {
+  const fr = new FileReader();
+  let res;
+  let rej;
+  const p = new Promise<HapticFileHandler>((aResolve, aReject) => {
     res = aResolve;
     rej = aReject;
   });
   fr.readAsText(aFile);
-  fr.onload = function (e : FileReaderEvent) {
-    let handler = LoadString(e.target.result);
+  fr.onload = function(e: IFileReaderEvent) {
+    const handler = LoadString(e.target.result);
     if (handler !== undefined) {
       res(handler);
     }
@@ -29,15 +30,17 @@ export function LoadFile(aFile: any) : Promise<HapticFileHandler> {
   return p;
 }
 
-export function LoadString(aBody : string) : HapticFileHandler | undefined {
-  let fileTypes = Object.keys(Handlers);
-  let parsers : Array<HapticFileHandler> = [];
+export function LoadString(aBody: string): HapticFileHandler | undefined {
+  const fileTypes = Object.keys(Handlers);
+  const parsers: HapticFileHandler[] = [];
   fileTypes.map((handlerType) => {
-    let h : HapticFileHandler = new Handlers[handlerType]();
+    const h: HapticFileHandler = new Handlers[handlerType]();
     try {
       h.LoadString(aBody);
       parsers.push(h);
     } catch (e) {
+      // just ignore if there's an error.
+      // TODO: Should probably at least typecheck error.
     }
   });
   if (parsers.length === 1) {

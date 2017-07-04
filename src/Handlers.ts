@@ -1,66 +1,69 @@
-import { HapticFileHandler } from './HapticFileHandler';
-import { HapticCommand, KiirooCommand } from './Commands';
-import * as ini from 'ini';
+// tslint:disable:max-classes-per-file
+"use strict";
 
-function ParseKiirooCommands(aCommands : string) : Array<HapticCommand> {
+import * as ini from "ini";
+import { HapticCommand, KiirooCommand } from "./Commands";
+import { HapticFileHandler } from "./HapticFileHandler";
+
+function ParseKiirooCommands(aCommands: string): HapticCommand[] {
   // We could very easily eval this and be on our way.
   // But really, do /you/ trust porn files? Really? Do you?
   // So string tokenization it is.
 
   // First off, let's make sure this is stringified javascript object
-  if (aCommands.indexOf('{') !== 0 || aCommands.indexOf('}') !== aCommands.length - 1) {
-    throw 'invalid kiiroo file';
+  if (aCommands.indexOf("{") !== 0 || aCommands.indexOf("}") !== aCommands.length - 1) {
+    throw new Error("invalid kiiroo file");
   }
 
   // Strip off { and }
-  let commands = aCommands.slice(1, aCommands.length - 1).split(',');
-  let retArray : Array<HapticCommand> = [];
+  const commands = aCommands.slice(1, aCommands.length - 1).split(",");
+  const retArray: HapticCommand[] = [];
   commands.forEach((x) => {
-    let timepos= x.split(":");
+    const timepos = x.split(":");
     // Convert to milliseconds and round down
-    let time = Math.floor(parseFloat(timepos[0]) * 1000);
-    let pos = parseInt(timepos[1]);
+    const time = Math.floor(parseFloat(timepos[0]) * 1000);
+    const pos = parseInt(timepos[1], 10);
     retArray.push(new KiirooCommand(time, pos));
   });
   return retArray;
 }
 
 export class FunscriptHandler extends HapticFileHandler  {
-  LoadString = (aBody : string) => {
-    throw "not implemented";
+  public LoadString = (aBody: string) => {
+    throw new Error("not implemented");
   }
 }
 
 export class FeelmeHandler extends HapticFileHandler  {
-  LoadString = (aBody : string) => {
-    let feelme_body = JSON.parse(aBody);
-    let commands = feelme_body.text;
+  public LoadString = (aBody: string) => {
+    const feelmeBody = JSON.parse(aBody);
+    const commands = feelmeBody.text;
     this._commands = ParseKiirooCommands(commands);
   }
 }
 
 export class KiirooHandler extends HapticFileHandler  {
-  LoadString = (aBody : string) => {
-    if (aBody.indexOf('var kiiroo_subtitles') != 0) {
-      throw "Wrong format";
+  public LoadString = (aBody: string) => {
+    if (aBody.indexOf("var kiiroo_subtitles") !== 0) {
+      throw new Error("Wrong format");
     }
-    let commands = aBody.substr(aBody.indexOf('{')).split(';')[0];
+    const commands = aBody.substr(aBody.indexOf("{")).split(";")[0];
     this._commands = ParseKiirooCommands(commands);
   }
 }
 
 export class VirtualRealPornHandler extends HapticFileHandler  {
-  LoadString = (aBody : string) => {
-    let vrpbody = ini.parse(aBody);
-    let commands : string = vrpbody.Kiiroo.onyx;
+  public LoadString = (aBody: string) => {
+    const vrpbody = ini.parse(aBody);
+    const commands: string = vrpbody.Kiiroo.onyx;
     // VRP commands are almost but not quite like JS Kiiroo commands. So make
     // them look like kiiroo commands, then parse them.
-    this._commands = ParseKiirooCommands('{' + commands.replace(',', ':').replace(';', ',') + '}');
+    this._commands = ParseKiirooCommands("{" + commands.replace(",", ":").replace(";", ",") + "}");
   }
 }
 
 export class VorzeHandler extends HapticFileHandler {
-  LoadString = (aBody : string) => {
-    throw "not implemented";
+  public LoadString = (aBody: string) => {
+    throw new Error("not implemented");
   }
 }

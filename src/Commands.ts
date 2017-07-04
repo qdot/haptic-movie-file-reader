@@ -1,3 +1,6 @@
+// tslint:disable:max-classes-per-file
+"use strict";
+
 export class HapticCommand {
   constructor(private _time: number) {
   }
