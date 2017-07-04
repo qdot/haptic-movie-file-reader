@@ -1,3 +1,4 @@
+// tslint:disable:max-classes-per-file
 "use strict";
 
 export class HapticCommand {

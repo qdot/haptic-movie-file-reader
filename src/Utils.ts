@@ -2,24 +2,25 @@ import { HapticCommand } from "./Commands";
 import * as Handlers from "./Handlers";
 import { HapticFileHandler } from "./HapticFileHandler";
 
-interface FileReaderEventTarget extends EventTarget {
+interface IFileReaderEventTarget extends EventTarget {
     result: string;
 }
 
-interface FileReaderEvent extends Event {
-    target: FileReaderEventTarget;
+interface IFileReaderEvent extends Event {
+    target: IFileReaderEventTarget;
     getMessage(): string;
 }
 
 export function LoadFile(aFile: any): Promise<HapticFileHandler> {
   const fr = new FileReader();
-  let res, rej;
+  let res;
+  let rej;
   const p = new Promise<HapticFileHandler>((aResolve, aReject) => {
     res = aResolve;
     rej = aReject;
   });
   fr.readAsText(aFile);
-  fr.onload = function(e: FileReaderEvent) {
+  fr.onload = function(e: IFileReaderEvent) {
     const handler = LoadString(e.target.result);
     if (handler !== undefined) {
       res(handler);
@@ -38,6 +39,8 @@ export function LoadString(aBody: string): HapticFileHandler | undefined {
       h.LoadString(aBody);
       parsers.push(h);
     } catch (e) {
+      // just ignore if there's an error.
+      // TODO: Should probably at least typecheck error.
     }
   });
   if (parsers.length === 1) {

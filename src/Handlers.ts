@@ -1,3 +1,4 @@
+// tslint:disable:max-classes-per-file
 "use strict";
 
 import * as ini from "ini";
@@ -21,29 +22,29 @@ function ParseKiirooCommands(aCommands: string): HapticCommand[] {
     const timepos = x.split(":");
     // Convert to milliseconds and round down
     const time = Math.floor(parseFloat(timepos[0]) * 1000);
-    const pos = parseInt(timepos[1]);
+    const pos = parseInt(timepos[1], 10);
     retArray.push(new KiirooCommand(time, pos));
   });
   return retArray;
 }
 
 export class FunscriptHandler extends HapticFileHandler  {
-  LoadString = (aBody: string) => {
+  public LoadString = (aBody: string) => {
     throw new Error("not implemented");
   }
 }
 
 export class FeelmeHandler extends HapticFileHandler  {
-  LoadString = (aBody: string) => {
-    const feelme_body = JSON.parse(aBody);
-    const commands = feelme_body.text;
+  public LoadString = (aBody: string) => {
+    const feelmeBody = JSON.parse(aBody);
+    const commands = feelmeBody.text;
     this._commands = ParseKiirooCommands(commands);
   }
 }
 
 export class KiirooHandler extends HapticFileHandler  {
-  LoadString = (aBody: string) => {
-    if (aBody.indexOf("var kiiroo_subtitles") != 0) {
+  public LoadString = (aBody: string) => {
+    if (aBody.indexOf("var kiiroo_subtitles") !== 0) {
       throw new Error("Wrong format");
     }
     const commands = aBody.substr(aBody.indexOf("{")).split(";")[0];
@@ -52,7 +53,7 @@ export class KiirooHandler extends HapticFileHandler  {
 }
 
 export class VirtualRealPornHandler extends HapticFileHandler  {
-  LoadString = (aBody: string) => {
+  public LoadString = (aBody: string) => {
     const vrpbody = ini.parse(aBody);
     const commands: string = vrpbody.Kiiroo.onyx;
     // VRP commands are almost but not quite like JS Kiiroo commands. So make
@@ -62,7 +63,7 @@ export class VirtualRealPornHandler extends HapticFileHandler  {
 }
 
 export class VorzeHandler extends HapticFileHandler {
-  LoadString = (aBody: string) => {
+  public LoadString = (aBody: string) => {
     throw new Error("not implemented");
   }
 }
