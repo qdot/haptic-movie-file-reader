@@ -22,23 +22,33 @@ hombre=-191.3/04-194.1/05-199.3/04-201.1/05-203.6/00
 [Kiiroo]
 onyx=201.24,3;319.37,1;478.78,4;589.74,0;610.34,4`
 
+let kiiroo_test = 'var kiiroo_subtitles = {201.24:3,319.37:1,478.78:4,589.74:0,610.34:4};';
+
 describe("Message", () => {
-  it("Loads a Feelme file correctly",
-     () => {
-       let parser = Reader.LoadString(feelme_test);
-       expect(parser).to.be.a('object');
-     });
+  function simpleLoadTest(test_str : string) {
+    let p = Reader.LoadString(test_str);
+    if (p === undefined)
+    {
+      throw "cannot read file";
+    }
+    let parser : HapticFileHandler = p;
+    expect(parser.CommandLength).to.be.greaterThan(0);
+    expect(parser.GetValueNearestTime(210000)).to.deep.equal(new KiirooCommand(201240, 3));
+  }
 
   it("Loads and reads a VRP file correctly",
      () => {
-       let p = Reader.LoadString(vrp_test);
-       if (p === undefined)
-       {
-         throw "cannot read file";
-       }
-       let parser : HapticFileHandler = p;
-       expect(parser.CommandLength).to.be.greaterThan(0);
-       expect(parser.GetValueNearestTime(210000)).to.deep.equal(new KiirooCommand(201240, 3));
+       simpleLoadTest(vrp_test);
+     });
+
+  it("Loads and reads a Kiiroo file correctly",
+     () => {
+       simpleLoadTest(kiiroo_test);
+     });
+
+  it("Loads and reads a Feelme file correctly",
+     () => {
+       simpleLoadTest(feelme_test);
      });
 
   it("Returns undefined when a time is before the first entry",
@@ -51,18 +61,6 @@ describe("Message", () => {
        let parser : HapticFileHandler = p;
        expect(parser.CommandLength).to.be.greaterThan(0);
        expect(parser.GetValueNearestTime(1)).to.be.undefined;
-     });
-
-  it("Returns last viable event when passed a valid time",
-     () => {
-       let p = Reader.LoadString(feelme_test);
-       if (p === undefined)
-       {
-         throw "cannot read file";
-       }
-       let parser : HapticFileHandler = p;
-       expect(parser.CommandLength).to.be.greaterThan(0);
-       expect(parser.GetValueNearestTime(210000)).to.deep.equal(new KiirooCommand(201240, 3));
      });
 
   it("Returns last viable event when passed a time greater than last time in array",
