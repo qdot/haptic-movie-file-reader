@@ -7,8 +7,8 @@
   "scripts": {
     "build": "trash dist dist-bundle && yarn build:main",
     "build:main": "tsc -p tsconfig.json",
-    "tslint": "tslint -c tslint.json src/* src/**/* tests/* tests/**/*",
-    "tslint:fix": "tslint -c tslint.json --fix semicolon,comma,no-var-keyword,ordered-imports src/* src/**/* tests/* tests/**/*",
+    "tslint": "tslint -c tslint.json src/*.ts src/**/*.ts tests/*.ts tests/**/*.ts",
+    "tslint:fix": "tslint -c tslint.json --fix semicolon,comma,no-var-keyword,ordered-imports src/*.ts src/**/*.ts tests/*.ts tests/**/*.ts",
     "pretest": "yarn build:main",
     "test": "nyc mocha tests/*.ts",
     "posttest": "nyc report && codecov -f coverage/*.json"
@@ -34,6 +34,7 @@
     "@types/node": "^7.0.22",
     "chai": "^3.5.0",
     "codecov": "^2.2.0",
+    "file-api": "^0.10.4",
     "mocha": "^3.4.1",
     "nyc": "^10.3.2",
     "trash-cli": "^1.4.0",

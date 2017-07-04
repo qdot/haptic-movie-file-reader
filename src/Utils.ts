@@ -1,3 +1,4 @@
+import { File, FileReader } from "file-api";
 import { HapticCommand } from "./Commands";
 import * as Handlers from "./Handlers";
 import { HapticFileHandler } from "./HapticFileHandler";

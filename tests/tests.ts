@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import { File } from "file-api";
 import "mocha";
 import * as Reader from "../src/";
 import { FunscriptCommand, KiirooCommand, VorzeCommand } from "../src/Commands";
@@ -33,13 +34,13 @@ const vorzeTest = `139,1,90,
 `;
 
 const funscriptTest = `{"range": 100,
- "actions": [
-   {"pos": 0, "at": 677777},
-   {"pos": 10, "at": 679112},
-   {"pos": 0, "at": 679579},
-   {"pos": 0, "at": 681081},
-   {"pos": 10, "at": 682916}
- ]
+"actions": [
+{"pos": 0, "at": 677777},
+{"pos": 10, "at": 679112},
+{"pos": 0, "at": 679579},
+{"pos": 0, "at": 681081},
+{"pos": 10, "at": 682916}
+]
 }`;
 
 const kiirooMessageArray: KiirooCommand[] = [
@@ -114,6 +115,19 @@ describe("Message", () => {
        expect(parser.CommandLength).to.equal(5);
        expect(parser.Commands).to.deep.equal(funscriptMessageArray);
        expect(parser.GetValueNearestTime(679500)).to.deep.equal(new FunscriptCommand(679112, 10));
+     });
+
+  it("Returns a valid object when loading from a file",
+     () => {
+       Reader.LoadFile(new File("./funscript.json")).then((p) => {
+         if (p === undefined) {
+           throw new Error("cannot read string");
+         }
+         const parser: HapticFileHandler = p;
+         expect(parser.CommandLength).to.equal(5);
+         expect(parser.Commands).to.deep.equal(funscriptMessageArray);
+         expect(parser.GetValueNearestTime(679500)).to.deep.equal(new FunscriptCommand(679112, 10));
+       });
      });
 
   it("Returns undefined when a time is before the first entry",
