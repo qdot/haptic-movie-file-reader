@@ -32,6 +32,14 @@ const vorzeTest = `139,1,90,
 145,1,90,
 `;
 
+const kiirooMessageArray: KiirooCommand[] = [
+  new KiirooCommand(201240, 3),
+  new KiirooCommand(319370, 1),
+  new KiirooCommand(478780, 4),
+  new KiirooCommand(589740, 0),
+  new KiirooCommand(610340, 4),
+];
+
 const vorzeMessageArray: VorzeCommand[] = [
   new VorzeCommand(139000, 1, 90),
   new VorzeCommand(141000, 0, 90),
@@ -41,29 +49,29 @@ const vorzeMessageArray: VorzeCommand[] = [
 ];
 
 describe("Message", () => {
-  function simpleLoadTest(testStr: string) {
-    const p = Reader.LoadString(testStr);
-    if (p === undefined) {
-      throw new Error("cannot read file");
+  function simpleKiirooLoadTest(testStr: string) {
+    const parser: HapticFileHandler | undefined = Reader.LoadString(testStr);
+    if (parser === undefined) {
+      throw new Error("cannot read string");
     }
-    const parser: HapticFileHandler = p;
-    expect(parser.CommandLength).to.be.greaterThan(0);
+    expect(parser.CommandLength).to.equal(5);
+    expect(parser.Commands).to.deep.equal(kiirooMessageArray);
     expect(parser.GetValueNearestTime(210000)).to.deep.equal(new KiirooCommand(201240, 3));
   }
 
   it("Loads and reads a VRP file correctly",
      () => {
-       simpleLoadTest(vrpTest);
+       simpleKiirooLoadTest(vrpTest);
      });
 
   it("Loads and reads a Kiiroo file correctly",
      () => {
-       simpleLoadTest(kiirooTest);
+       simpleKiirooLoadTest(kiirooTest);
      });
 
   it("Loads and reads a Feelme file correctly",
      () => {
-       simpleLoadTest(feelmeTest);
+       simpleKiirooLoadTest(feelmeTest);
      });
 
   it("Loads and reads a Vorze file correctly",
@@ -85,7 +93,7 @@ describe("Message", () => {
          throw new Error("cannot read file");
        }
        const parser: HapticFileHandler = p;
-       expect(parser.CommandLength).to.be.greaterThan(0);
+       expect(parser.CommandLength).to.equal(5);
        // tslint:disable-next-line:no-unused-expression
        expect(parser.GetValueNearestTime(1)).to.be.undefined;
      });
@@ -97,7 +105,7 @@ describe("Message", () => {
          throw new Error("cannot read file");
        }
        const parser: HapticFileHandler = p;
-       expect(parser.CommandLength).to.be.greaterThan(0);
+       expect(parser.CommandLength).to.equal(5);
        expect(parser.GetValueNearestTime(620000)).to.deep.equal(new KiirooCommand(610340, 4));
      });
 });

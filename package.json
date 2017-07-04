@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/metafetish/haptic-movie-file-reader#readme",
   "dependencies": {
-    "ini": "^1.3.4"
+    "multi-ini": "^1.0.1"
   },
   "devDependencies": {
     "@types/chai": "^3.5.2",

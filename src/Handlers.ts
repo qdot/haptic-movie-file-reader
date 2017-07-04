@@ -1,7 +1,7 @@
 // tslint:disable:max-classes-per-file
 "use strict";
 
-import * as ini from "ini";
+import * as ini from "multi-ini";
 import { HapticCommand, KiirooCommand, VorzeCommand } from "./Commands";
 import { HapticFileHandler } from "./HapticFileHandler";
 
@@ -54,11 +54,13 @@ export class KiirooHandler extends HapticFileHandler  {
 
 export class VirtualRealPornHandler extends HapticFileHandler  {
   public LoadString = (aBody: string) => {
-    const vrpbody = ini.parse(aBody);
+    const parser = new ini.Parser();
+    const vrpbody = parser.parse(aBody.split("\n"));
     const commands: string = vrpbody.Kiiroo.onyx;
+
     // VRP commands are almost but not quite like JS Kiiroo commands. So make
     // them look like kiiroo commands, then parse them.
-    this._commands = ParseKiirooCommands("{" + commands.replace(",", ":").replace(";", ",") + "}");
+    this._commands = ParseKiirooCommands("{" + commands.replace(/,/g, ":").replace(/;/g, ",") + "}");
   }
 }
 
