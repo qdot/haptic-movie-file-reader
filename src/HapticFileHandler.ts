@@ -11,6 +11,10 @@ export abstract class HapticFileHandler {
     return this._commands.length;
   }
 
+  public get Commands(): HapticCommand[] {
+    return this._commands;
+  }
+
   // TODO Lots of optimization choices here.
   public GetValueNearestTime(aTime: number): HapticCommand | undefined {
     // We figure we'll normally be handing out indexes sequentially, while a

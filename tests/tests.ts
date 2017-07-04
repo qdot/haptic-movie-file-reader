@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
 import * as Reader from "../src/";
-import { KiirooCommand } from "../src/Commands";
+import { KiirooCommand, VorzeCommand } from "../src/Commands";
 import { HapticFileHandler } from "../src/HapticFileHandler";
 
 // tslint:disable-next-line:max-line-length
@@ -24,6 +24,21 @@ hombre=-191.3/04-194.1/05-199.3/04-201.1/05-203.6/00
 onyx=201.24,3;319.37,1;478.78,4;589.74,0;610.34,4`;
 
 const kiirooTest = "var kiiroo_subtitles = {201.24:3,319.37:1,478.78:4,589.74:0,610.34:4};";
+
+const vorzeTest = `139,1,90,
+141,0,90,
+142,1,90,
+144,0,90,
+145,1,90,
+`;
+
+const vorzeMessageArray: VorzeCommand[] = [
+  new VorzeCommand(139000, 1, 90),
+  new VorzeCommand(141000, 0, 90),
+  new VorzeCommand(142000, 1, 90),
+  new VorzeCommand(144000, 0, 90),
+  new VorzeCommand(145000, 1, 90),
+];
 
 describe("Message", () => {
   function simpleLoadTest(testStr: string) {
@@ -49,6 +64,18 @@ describe("Message", () => {
   it("Loads and reads a Feelme file correctly",
      () => {
        simpleLoadTest(feelmeTest);
+     });
+
+  it("Loads and reads a Vorze file correctly",
+     () => {
+       const p = Reader.LoadString(vorzeTest);
+       if (p === undefined) {
+         throw new Error("cannot read file");
+       }
+       const parser: HapticFileHandler = p;
+       expect(parser.CommandLength).to.equal(5);
+       expect(parser.Commands).to.deep.equal(vorzeMessageArray);
+       expect(parser.GetValueNearestTime(141000)).to.deep.equal(new VorzeCommand(141000, 0, 90));
      });
 
   it("Returns undefined when a time is before the first entry",
