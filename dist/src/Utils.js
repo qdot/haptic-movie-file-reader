@@ -1,9 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var file_api_1 = require("file-api");
 var Handlers = require("./Handlers");
+try {
+    // assuming the require works, these will hoist into the library.
+    var FileAPI = require('file-api'), File = FileAPI.File, FileList = FileAPI.FileList, FileReader = FileAPI.FileReader;
+}
+catch (e) {
+    // If the import files, this could be because file-api isn't included.
+}
 function LoadFile(aFile) {
-    var fr = new file_api_1.FileReader();
+    var fr = new FileReader();
     var res;
     var rej;
     var p = new Promise(function (aResolve, aReject) {
