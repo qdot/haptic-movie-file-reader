@@ -1,7 +1,7 @@
+import * as FileAPI from "file-api";
 import { HapticCommand } from "./Commands";
 import * as Handlers from "./Handlers";
 import { HapticFileHandler } from "./HapticFileHandler";
-import * as FileAPI from 'file-api';
 
 interface IFileReaderEventTarget extends EventTarget {
   result: string;
