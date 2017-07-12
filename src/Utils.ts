@@ -1,15 +1,25 @@
-import { File, FileReader } from "file-api";
 import { HapticCommand } from "./Commands";
 import * as Handlers from "./Handlers";
 import { HapticFileHandler } from "./HapticFileHandler";
 
-interface IFileReaderEventTarget extends EventTarget {
-    result: string;
-}
+try {
+  // assuming the require works, these will hoist into the library.
+  var FileAPI = require('file-api')
+  , File = FileAPI.File
+  , FileList = FileAPI.FileList
+  , FileReader = FileAPI.FileReader
+  ;
 
-interface IFileReaderEvent extends Event {
+  interface IFileReaderEventTarget extends EventTarget {
+    result: string;
+  }
+
+  interface IFileReaderEvent extends Event {
     target: IFileReaderEventTarget;
     getMessage(): string;
+  }
+} catch (e) {
+  // If the import files, this could be because file-api isn't included.
 }
 
 export function LoadFile(aFile: any): Promise<HapticFileHandler> {
@@ -21,7 +31,7 @@ export function LoadFile(aFile: any): Promise<HapticFileHandler> {
     rej = aReject;
   });
   fr.readAsText(aFile);
-  fr.onload = function(e: IFileReaderEvent) {
+  fr.onload = function(e: any) {
     const handler = LoadString(e.target.result);
     if (handler !== undefined) {
       res(handler);
