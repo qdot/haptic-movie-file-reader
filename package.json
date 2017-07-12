@@ -1,6 +1,6 @@
 {
   "name": "haptic-movie-file-reader",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Process different haptic movie file formats, and retreive information from them.",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/metafetish/haptic-movie-file-reader#readme",
   "dependencies": {
+    "file-api": "^0.10.4",
     "multi-ini": "^1.0.1"
   },
   "devDependencies": {
@@ -34,7 +35,6 @@
     "@types/node": "^7.0.22",
     "chai": "^3.5.0",
     "codecov": "^2.2.0",
-    "file-api": "^0.10.4",
     "mocha": "^3.4.1",
     "nyc": "^10.3.2",
     "trash-cli": "^1.4.0",
