@@ -8,6 +8,9 @@ import { HapticFileHandler } from "../src/HapticFileHandler";
 // tslint:disable-next-line:max-line-length
 const feelmeTest = '{"id": 1, "video": {"subtitles_count": 1, "description": "", "name": "1", "external_id": "1", "created": "2017-06-25T20:09:09.871560"}, "text": "{201.24:3,319.37:1,478.78:4,589.74:0,610.34:4}", "created": "2017-06-25T20:09:09.871560", "video_external_id": "1", "name": "Test Value", "type": "penetration", "description": "Testing File", "session_id": 1}';
 
+// tslint:disable-next-line:max-line-length
+const feelvrTest = '{"subs":{"type":"penetration","id": 1,"video":{"external_id":"1","name":"1","created":"2017-01-11T11:01:11.111111","subtitles_count":1,"description":null},"video_external_id":"1151","session_id":93006,"text":"{201.24:3,319.37:1,478.78:4,589.74:0,610.34:4}","name":"Testing file","description":"testing","created":"2017-01-11T11:01:11.111111"},"format":"MONO_360","file":"test.mp4","source":"https://testing.com/test.mp4","downloadComplete":true}';
+
 const vrpTest = `[Player]
 h_offset=0
 vert_rot=15
@@ -91,6 +94,11 @@ describe("Message", () => {
   it("Loads and reads a Feelme file correctly",
      () => {
        simpleKiirooLoadTest(feelmeTest);
+     });
+
+  it("Loads and reads a Feelvr file correctly",
+     () => {
+       simpleKiirooLoadTest(feelvrTest);
      });
 
   it("Loads and reads a Vorze file correctly",
