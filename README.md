@@ -7,7 +7,7 @@ The following formats are supported:
 
 - Vorze Interactive (CSV)
 - Kiiroo (Javascript)
-- Feelme (JSON)
+- Feelme/FeelVR (JSON)
 - VirtualRealPlayer (INI)
 - RealTouch (?)
 - Funscript (JSON)
