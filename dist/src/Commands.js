@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var HapticCommand = (function () {
+var HapticCommand = /** @class */ (function () {
     function HapticCommand(_time) {
         this._time = _time;
     }
@@ -25,7 +25,7 @@ var HapticCommand = (function () {
     return HapticCommand;
 }());
 exports.HapticCommand = HapticCommand;
-var KiirooCommand = (function (_super) {
+var KiirooCommand = /** @class */ (function (_super) {
     __extends(KiirooCommand, _super);
     function KiirooCommand(time, _position) {
         var _this = _super.call(this, time) || this;
@@ -42,7 +42,7 @@ var KiirooCommand = (function (_super) {
     return KiirooCommand;
 }(HapticCommand));
 exports.KiirooCommand = KiirooCommand;
-var VorzeCommand = (function (_super) {
+var VorzeCommand = /** @class */ (function (_super) {
     __extends(VorzeCommand, _super);
     function VorzeCommand(time, _direction, _speed) {
         var _this = _super.call(this, time) || this;
@@ -67,7 +67,7 @@ var VorzeCommand = (function (_super) {
     return VorzeCommand;
 }(HapticCommand));
 exports.VorzeCommand = VorzeCommand;
-var LovenseMaxCommand = (function (_super) {
+var LovenseMaxCommand = /** @class */ (function (_super) {
     __extends(LovenseMaxCommand, _super);
     function LovenseMaxCommand(time, _inflation) {
         var _this = _super.call(this, time) || this;
@@ -84,7 +84,7 @@ var LovenseMaxCommand = (function (_super) {
     return LovenseMaxCommand;
 }(HapticCommand));
 exports.LovenseMaxCommand = LovenseMaxCommand;
-var FunscriptCommand = (function (_super) {
+var FunscriptCommand = /** @class */ (function (_super) {
     __extends(FunscriptCommand, _super);
     function FunscriptCommand(time, _position) {
         var _this = _super.call(this, time) || this;

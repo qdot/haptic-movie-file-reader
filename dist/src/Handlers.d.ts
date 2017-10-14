@@ -5,6 +5,9 @@ export declare class FunscriptHandler extends HapticFileHandler {
 export declare class FeelmeHandler extends HapticFileHandler {
     LoadString: (aBody: string) => void;
 }
+export declare class FeelVRHandler extends HapticFileHandler {
+    LoadString: (aBody: string) => void;
+}
 export declare class KiirooHandler extends HapticFileHandler {
     LoadString: (aBody: string) => void;
 }

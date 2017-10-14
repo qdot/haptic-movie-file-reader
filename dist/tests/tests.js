@@ -7,6 +7,8 @@ var Reader = require("../src/");
 var Commands_1 = require("../src/Commands");
 // tslint:disable-next-line:max-line-length
 var feelmeTest = '{"id": 1, "video": {"subtitles_count": 1, "description": "", "name": "1", "external_id": "1", "created": "2017-06-25T20:09:09.871560"}, "text": "{201.24:3,319.37:1,478.78:4,589.74:0,610.34:4}", "created": "2017-06-25T20:09:09.871560", "video_external_id": "1", "name": "Test Value", "type": "penetration", "description": "Testing File", "session_id": 1}';
+// tslint:disable-next-line:max-line-length
+var feelvrTest = '{"subs":{"type":"penetration","id": 1,"video":{"external_id":"1","name":"1","created":"2017-01-11T11:01:11.111111","subtitles_count":1,"description":null},"video_external_id":"1151","session_id":93006,"text":"{201.24:3,319.37:1,478.78:4,589.74:0,610.34:4}","name":"Testing file","description":"testing","created":"2017-01-11T11:01:11.111111"},"format":"MONO_360","file":"test.mp4","source":"https://testing.com/test.mp4","downloadComplete":true}';
 var vrpTest = "[Player]\nh_offset=0\nvert_rot=15\nzoom=0\n\n[VideoInfo]\nname=Test Video\nversion=3\n\n[Lovense]\nhombre_trailer=-10.7/05-18.1/04-19.6/05-21.1/02-24/00\nhombre=-191.3/04-194.1/05-199.3/04-201.1/05-203.6/00\n\n[Kiiroo]\nonyx=201.24,3;319.37,1;478.78,4;589.74,0;610.34,4";
 var kiirooTest = "var kiiroo_subtitles = {201.24:3,319.37:1,478.78:4,589.74:0,610.34:4};";
 var vorzeTest = "139,1,90,\n141,0,90,\n142,1,90,\n144,0,90,\n145,1,90,\n";
@@ -50,6 +52,9 @@ describe("Message", function () {
     });
     it("Loads and reads a Feelme file correctly", function () {
         simpleKiirooLoadTest(feelmeTest);
+    });
+    it("Loads and reads a Feelvr file correctly", function () {
+        simpleKiirooLoadTest(feelvrTest);
     });
     it("Loads and reads a Vorze file correctly", function () {
         var p = Reader.LoadString(vorzeTest);
