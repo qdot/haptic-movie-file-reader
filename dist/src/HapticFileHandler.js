@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var HapticFileHandler = (function () {
+var HapticFileHandler = /** @class */ (function () {
     function HapticFileHandler() {
         this._commands = [];
         this._lastIndexRetrieved = 0;

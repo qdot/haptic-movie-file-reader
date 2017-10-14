@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Handlers = require("./Handlers");
 var FileAPI = require("file-api");
+var Handlers = require("./Handlers");
 function LoadFile(aFile) {
     var fr;
     try {

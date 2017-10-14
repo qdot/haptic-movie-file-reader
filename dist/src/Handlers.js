@@ -34,7 +34,7 @@ function ParseKiirooCommands(aCommands) {
     });
     return retArray;
 }
-var FunscriptHandler = (function (_super) {
+var FunscriptHandler = /** @class */ (function (_super) {
     __extends(FunscriptHandler, _super);
     function FunscriptHandler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -46,7 +46,7 @@ var FunscriptHandler = (function (_super) {
     return FunscriptHandler;
 }(HapticFileHandler_1.HapticFileHandler));
 exports.FunscriptHandler = FunscriptHandler;
-var FeelmeHandler = (function (_super) {
+var FeelmeHandler = /** @class */ (function (_super) {
     __extends(FeelmeHandler, _super);
     function FeelmeHandler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -58,7 +58,19 @@ var FeelmeHandler = (function (_super) {
     return FeelmeHandler;
 }(HapticFileHandler_1.HapticFileHandler));
 exports.FeelmeHandler = FeelmeHandler;
-var KiirooHandler = (function (_super) {
+var FeelVRHandler = /** @class */ (function (_super) {
+    __extends(FeelVRHandler, _super);
+    function FeelVRHandler() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.LoadString = function (aBody) {
+            _this._commands = ParseKiirooCommands(JSON.parse(aBody).subs.text);
+        };
+        return _this;
+    }
+    return FeelVRHandler;
+}(HapticFileHandler_1.HapticFileHandler));
+exports.FeelVRHandler = FeelVRHandler;
+var KiirooHandler = /** @class */ (function (_super) {
     __extends(KiirooHandler, _super);
     function KiirooHandler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -74,7 +86,7 @@ var KiirooHandler = (function (_super) {
     return KiirooHandler;
 }(HapticFileHandler_1.HapticFileHandler));
 exports.KiirooHandler = KiirooHandler;
-var VirtualRealPornHandler = (function (_super) {
+var VirtualRealPornHandler = /** @class */ (function (_super) {
     __extends(VirtualRealPornHandler, _super);
     function VirtualRealPornHandler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -91,7 +103,7 @@ var VirtualRealPornHandler = (function (_super) {
     return VirtualRealPornHandler;
 }(HapticFileHandler_1.HapticFileHandler));
 exports.VirtualRealPornHandler = VirtualRealPornHandler;
-var VorzeHandler = (function (_super) {
+var VorzeHandler = /** @class */ (function (_super) {
     __extends(VorzeHandler, _super);
     function VorzeHandler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
