@@ -40,6 +40,12 @@ export class FeelmeHandler extends HapticFileHandler  {
   }
 }
 
+export class FeelVRHandler extends HapticFileHandler  {
+  public LoadString = (aBody: string) => {
+    this._commands = ParseKiirooCommands(JSON.parse(aBody).subs.text);
+  }
+}
+
 export class KiirooHandler extends HapticFileHandler  {
   public LoadString = (aBody: string) => {
     if (aBody.indexOf("var kiiroo_subtitles") !== 0) {
