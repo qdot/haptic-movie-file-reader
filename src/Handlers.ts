@@ -10,6 +10,11 @@ function ParseKiirooCommands(aCommands: string): HapticCommand[] {
   // But really, do /you/ trust porn files? Really? Do you?
   // So string tokenization it is.
 
+  // Dear FeelMe/WankzVR: Come on, putting a space at the front of the body just to
+  // break my crappy parser? That's not very nice.
+  // See https://github.com/metafetish/haptic-movie-file-reader/issues/23
+  aCommands = aCommands.trim();
+
   // First off, let's make sure this is stringified javascript object
   if (aCommands.indexOf("{") !== 0 || aCommands.indexOf("}") !== aCommands.length - 1) {
     throw new Error("invalid kiiroo file");
