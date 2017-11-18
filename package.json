@@ -1,6 +1,6 @@
 {
   "name": "haptic-movie-file-reader",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Process different haptic movie file formats, and retreive information from them.",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",

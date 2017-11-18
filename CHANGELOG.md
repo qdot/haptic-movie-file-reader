@@ -1,3 +1,7 @@
+# Version 0.0.10 - 2017-11-17
+
+- Version 0.0.8 but REALLY with artifacts because I .fixed the gitignore file finally.
+
 # Version 0.0.9 - 2017-11-17
 
 - Version 0.0.8 but also with artifacts this time. :p
