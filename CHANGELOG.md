@@ -1,3 +1,7 @@
+# Version 0.0.8 - 2017-11-17
+
+- Fix WankzVR file parsing
+
 # Version 0.0.7 - 2017-10-13
 
 - Support for FeelVR files
