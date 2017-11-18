@@ -1,3 +1,7 @@
+# Version 0.0.9 - 2017-11-17
+
+- Version 0.0.8 but also with artifacts this time. :p
+
 # Version 0.0.8 - 2017-11-17
 
 - Fix WankzVR file parsing
